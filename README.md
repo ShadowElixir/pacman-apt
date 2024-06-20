@@ -1,6 +1,8 @@
 # pacman-apt
 Pacman and Apt for Windows.
 
+Make sure to use Powershell Core 7.
+
 Already included in my [Better Powershell Profile](https://github.com/ShadowElixir/better-powershell-profile).
 
 # Installation
