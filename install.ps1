@@ -27,3 +27,7 @@ scoop config aria2-warning-enabled false
 # Install the module
 irm https://raw.githubusercontent.com/ShadowElixir/pacman-apt/main/pacman-apt.psm1 -outFile "$env:userprofile\Documents\Powershell\Modules\pacman-apt\pacman-apt.psm1"
 Write-Output "`nImport-Module `"pacman-apt`"" | Add-Content $PROFILE # Code from gsudo readme, but with "pacman-apt" instead of "gsudoModule"
+
+# gsudo compatibility
+scoop install gsudo
+Write-Output 'function sudo { gsudo "Import-Module pacman-apt; $args" }' | Add-Content $PROFILE
