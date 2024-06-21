@@ -35,9 +35,21 @@ New-Item -ItemType Directory -Force -Path "$env:userprofile\Documents\WindowsPow
 # Install the module
 irm https://raw.githubusercontent.com/ShadowElixir/pacman-apt/main/pacman-apt.psm1 -outFile "$env:userprofile\Documents\Powershell\Modules\pacman-apt\pacman-apt.psm1" -erroraction 'silentlycontinue'
 irm https://raw.githubusercontent.com/ShadowElixir/pacman-apt/main/pacman-apt.psm1 -outFile "$env:userprofile\Documents\WindowsPowerShell\Modules\pacman-apt\pacman-apt.psm1" -erroraction 'silentlycontinue'
-Write-Output 'Import-Module "pacman-apt"' | Add-Content $PROFILE # Code slightly modified from gsudo readme, but with "pacman-apt" instead of "gsudoModule"
 
 # gsudo compatibility
 scoop install gsudo
-Write-Output 'Import-Module "gsudoModule"' | Add-Content $PROFILE # Code slightly modified from gsudo readme
-Write-Output 'function sudo { gsudo "Import-Module pacman-apt; $args" }' | Add-Content $PROFILE # Code slightly modified from gsudo readme
+
+# Add to Profile
+$commands = @(
+    'Import-Module "pacman-apt"',
+    'Import-Module "gsudoModule"',
+    'function sudo { gsudo "Import-Module pacman-apt; $args" }'
+)
+
+$profileContent = Get-Content $PROFILE -Raw
+
+foreach ($command in $commands) {
+    if ($profileContent -notmatch [regex]::Escape($command)) {
+        Write-Output $command | Add-Content $PROFILE
+    }
+}
