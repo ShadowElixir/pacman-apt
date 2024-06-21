@@ -24,6 +24,10 @@ if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
 scoop install aria2
 scoop config aria2-warning-enabled false
 
+# Add extras bucket to scoop
+scoop install git
+scoop bucket add extras
+
 # Make sure Module folders exist
 New-Item -ItemType Directory -Force -Path "$env:userprofile\Documents\Powershell\Modules\pacman-apt" -erroraction 'silentlycontinue'
 New-Item -ItemType Directory -Force -Path "$env:userprofile\Documents\WindowsPowerShell\Modules\pacman-apt" -erroraction 'silentlycontinue'
