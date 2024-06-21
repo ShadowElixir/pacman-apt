@@ -47,7 +47,7 @@ if (-not (Test-Path -Path $PROFILE)) {
 $commands = @(
     'Import-Module "pacman-apt"',
     'Import-Module "gsudoModule"',
-    'function sudo { gsudo "Import-Module pacman-apt; $args" }',
+    'function sudo { gsudo "Import-Module pacman-apt; $args" }'
 )
 
 $profileContent = Get-Content $PROFILE -Raw
