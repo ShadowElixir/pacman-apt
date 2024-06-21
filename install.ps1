@@ -40,10 +40,14 @@ irm https://raw.githubusercontent.com/ShadowElixir/pacman-apt/main/pacman-apt.ps
 scoop install gsudo
 
 # Add to Profile
+if (-not (Test-Path -Path $PROFILE)) {
+    New-Item -Path $PROFILE -ItemType File -Force
+}
+
 $commands = @(
     'Import-Module "pacman-apt"',
     'Import-Module "gsudoModule"',
-    'function sudo { gsudo "Import-Module pacman-apt; $args" }'
+    'function sudo { gsudo "Import-Module pacman-apt; $args" }',
 )
 
 $profileContent = Get-Content $PROFILE -Raw
@@ -53,3 +57,4 @@ foreach ($command in $commands) {
         Write-Output $command | Add-Content $PROFILE
     }
 }
+
