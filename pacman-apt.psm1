@@ -1,5 +1,6 @@
 # choco -> apt
 Set-Alias -Name "apt" choco
+Set-Alias -Name "apt-get" choco
 
 # scoop -> pacman
 function pacman {
