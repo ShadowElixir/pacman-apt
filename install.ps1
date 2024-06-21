@@ -55,6 +55,6 @@ $profileContent = Get-Content $PROFILE -Raw
 
 foreach ($command in $commands) {
     if ($profileContent -notmatch [regex]::Escape($command)) {
-        Write-Output $command | Add-Content $PROFILE
+        Add-Content -Path $PROFILE -Value "`n$command"
     }
 }
