@@ -4,6 +4,11 @@ if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
     break
 }
 
+# Makes profile if it doesn't exist
+if (-not (Test-Path -Path $PROFILE)) {
+    New-Item -Path $PROFILE -ItemType File -Force
+}
+
 # Choco install (code from Christ Titus' powershell profile)
 try {
     Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
@@ -40,10 +45,6 @@ irm https://raw.githubusercontent.com/ShadowElixir/pacman-apt/main/pacman-apt.ps
 scoop install gsudo
 
 # Add to Profile
-if (-not (Test-Path -Path $PROFILE)) {
-    New-Item -Path $PROFILE -ItemType File -Force
-}
-
 $commands = @(
     'Import-Module "pacman-apt"',
     'Import-Module "gsudoModule"',
@@ -57,4 +58,3 @@ foreach ($command in $commands) {
         Write-Output $command | Add-Content $PROFILE
     }
 }
-
