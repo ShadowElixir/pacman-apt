@@ -5,8 +5,8 @@ if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 }
 
 # Makes profile if it doesn't exist
-if (-not (Test-Path -Path $PROFILE)) {
-    New-Item -Path $PROFILE -ItemType File -Force
+if (-not (Test-Path -Path $PROFILE.CurrentUserAllHosts)) {
+    New-Item -Path $PROFILE.CurrentUserAllHosts -ItemType File -Force
 }
 
 # Choco install (code from Christ Titus' powershell profile)
@@ -51,10 +51,10 @@ $commands = @(
     'function sudo { gsudo "Import-Module pacman-apt; $args" }'
 )
 
-$profileContent = Get-Content $PROFILE -Raw
+$profileContent = Get-Content $PROFILE.CurrentUserAllHosts -Raw
 
 foreach ($command in $commands) {
     if ($profileContent -notmatch [regex]::Escape($command)) {
-        Add-Content -Path $PROFILE -Value "`n$command"
+        Add-Content -Path $PROFILE.CurrentUserAllHosts -Value "`n$command"
     }
 }
